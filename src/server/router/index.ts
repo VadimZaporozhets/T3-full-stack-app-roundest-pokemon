@@ -14,7 +14,10 @@ export const appRouter = t.router({
 
 			const pokemon = await api.getPokemonById(input.id);
 
-			return pokemon;
+			return {
+				name: pokemon.name,
+				sprites: pokemon.sprites,
+			};
 		}),
 });
 

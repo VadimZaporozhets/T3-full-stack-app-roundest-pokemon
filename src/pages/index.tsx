@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { NextPage } from "next";
-import Image from "next/image";
 import { trpc } from "@/utils/trpc";
 import { getOptionsForVote } from "@/utils/getRandomPokemon";
+import PokemonListing from "@/components/index/PokemonListing";
 
 const Home: NextPage = () => {
 	const [ids, updateIds] = useState(() => getOptionsForVote());
@@ -15,6 +15,10 @@ const Home: NextPage = () => {
 	if (firstPokemon.isLoading || secondPokemon.isLoading) {
 		return <div>Loading...</div>;
 	}
+
+	const voteForRoundest = (id: number) => {
+		updateIds(getOptionsForVote());
+	};
 
 	if (firstPokemon.isError || secondPokemon.isError) {
 		return <div>Error</div>;
@@ -29,19 +33,13 @@ const Home: NextPage = () => {
 			<div className="text-2xl text-center">Which Pokemon is Rounder?</div>
 			<div className="p-2"></div>
 			<div className="border rounded p-8 justify-between items-center max-w-2xl flex">
-				<div className="flex flex-col">
-					<div className="relative w-64 h-64">
-						<Image src={firstPokemon?.data?.sprites?.front_default || ""} layout="fill" alt="" />
-					</div>
-					<div className="text-xl text-center capitalize mt-[-2rem]">{firstPokemon?.data?.name}</div>
-				</div>
-				<div className="p-8">VS</div>
-				<div className="flex flex-col">
-					<div className="relative w-64 h-64">
-						<Image src={secondPokemon?.data?.sprites?.front_default || ""} layout="fill" alt="" />
-					</div>
-					<div className="text-xl text-center capitalize mt-[-2rem]">{secondPokemon?.data?.name}</div>
-				</div>
+				{!firstPokemon.isLoading && firstPokemon.data && !secondPokemon.isLoading && secondPokemon.data && (
+					<>
+						<PokemonListing pokemon={firstPokemon.data} voteForRoundest={() => { voteForRoundest(first); }} /> 
+						<div className="p-8">VS</div>
+						<PokemonListing pokemon={secondPokemon.data} voteForRoundest={() => { voteForRoundest(second); }} /> 
+					</>
+				)}
 				<div className="p-2"></div>
 			</div>
 		</div>
