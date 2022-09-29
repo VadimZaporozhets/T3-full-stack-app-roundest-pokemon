@@ -12,20 +12,19 @@ const Home: NextPage = () => {
 	const firstPokemon = trpc.getPokemonById.useQuery({ id: first });
 	const secondPokemon = trpc.getPokemonById.useQuery({ id: second });
 
-	if (firstPokemon.isLoading || secondPokemon.isLoading) {
-		return <div>Loading...</div>;
-	}
+	const voteMutation = trpc.castVote.useMutation();
 
 	const voteForRoundest = (id: number) => {
+		voteMutation.mutate({
+			votedFor: id,
+			votedAgainst: id === first ? second : first,
+		});
+
 		updateIds(getOptionsForVote());
 	};
 
-	if (firstPokemon.isError || secondPokemon.isError) {
-		return <div>Error</div>;
-	}
-
-	if (!firstPokemon.data || !secondPokemon.data) {
-		return <div>Missing data</div>;
+	if (firstPokemon.isLoading || secondPokemon.isLoading) {
+		return <div>Loading...</div>;
 	}
 
 	return (
