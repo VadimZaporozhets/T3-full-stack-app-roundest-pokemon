@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import { trpc } from "@/utils/trpc";
 import { getOptionsForVote } from "@/utils/getRandomPokemon";
 import PokemonListing from "@/components/index/PokemonListing";
+import Link from "next/link";
 
 const Home: NextPage = () => {
 	const [ids, updateIds] = useState(() => getOptionsForVote());
@@ -41,6 +42,9 @@ const Home: NextPage = () => {
 				)}
 				<div className="p-2"></div>
 			</div>
+			<Link href="/results">
+				<a className="mx-auto block mt-8 text-center hover:underline">Check the results</a>
+			</Link>
 		</div>
 	);
 };

@@ -31,11 +31,33 @@ export const appRouter = t.router({
 				}
 			});
 
+			await prisma.pokemon.update({
+				where: {
+					id: input.votedFor
+				},
+				data: {
+					votesCount: {
+						increment: 1
+					}
+				}
+			});
+
 			return {
 				success: true,
 				vote: voteInDb
 			};
 		}),
+	getMostRoundestPokemons: t.procedure
+		.query(async () => {
+			const pokemons = await prisma.pokemon.findMany({
+				take: 5,
+				orderBy: {
+					votesCount: "desc"
+				}
+			});
+
+			return pokemons;
+		})
 });
 
 // export type definition of API
