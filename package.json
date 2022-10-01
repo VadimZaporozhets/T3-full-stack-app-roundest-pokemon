@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start",
     "lint": "next lint",
     "fill-db": "ts-node --compiler-options '{\"module\":\"commonjs\"}' './scripts/fill-db.ts'" 
