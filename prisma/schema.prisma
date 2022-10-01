@@ -6,14 +6,22 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Vote {
-  id           String   @id @default(cuid())
-  createdAt    DateTime @default(now())
-  votedFor     Int
-  votedAgainst Int
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime @default(now())
+  votedFor      Int
+  winnerPokemon Pokemon  @relation(fields: [votedFor], references: [id])
+  votedAgainst  Int
+}
+
+model Pokemon {
+  id         Int    @id @map("_id")
+  name       String
+  spriteUrl  String
+  votesCount Int
+  votes      Vote[]
 }

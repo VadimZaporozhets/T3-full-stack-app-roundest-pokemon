@@ -15,7 +15,7 @@ const PokemonListing: FC<PokemonListingProps> = ({ pokemon, voteForRoundest }) =
 	return (
 		<div className="flex flex-col items-center">
 			<div className="relative w-64 h-64">
-				<Image src={pokemon?.sprites?.front_default || ""} layout="fill" alt="" />
+				<Image src={pokemon?.spriteUrl || ""} layout="fill" alt="" />
 			</div>
 			<div className="text-xl text-center capitalize mt-[-2rem]">{pokemon?.name}</div>
 			<button className={buttonClasses} onClick={voteForRoundest}>Rounder</button>
