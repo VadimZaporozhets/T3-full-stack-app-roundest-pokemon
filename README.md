@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## This is a full stack project to get the roundest pokemon
 
-Preview: https://vercel.com/vadymzaporozhets/t3-full-stack-app-roundest-pokemon-h7bx
+Preview: https://t3-full-stack-app-roundest-pokemon-h7bx-5cmlxpdgr.vercel.app
 
 ## Getting Started
 
